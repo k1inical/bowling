@@ -1,7 +1,17 @@
 package org.example;
 
-public interface Game {
-    void roll(int score);
+public class Game {
 
-    int score();
+    private int gameScore;
+
+    public void roll(int pinsKnocked) {
+        if (pinsKnocked > 10 || pinsKnocked < 0) {
+            throw new IllegalArgumentException();
+        }
+        gameScore = gameScore + pinsKnocked;
+    }
+
+    public int score() {
+        return gameScore;
+    }
 }
