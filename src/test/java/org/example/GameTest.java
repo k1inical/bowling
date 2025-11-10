@@ -43,5 +43,16 @@ class GameTest {
         assertThatThrownBy(() -> gameUnderTest.roll(2)).isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    void canNotHaveMoreThan10Frames(){
+        for (int i = 0; i < 21; i++) {
+            gameUnderTest.roll(5);
+        }
+        assertThatThrownBy(()  -> gameUnderTest.roll(10)).isInstanceOf(IllegalArgumentException.class);
+
+    }
+
+
+
 }
 

@@ -16,25 +16,39 @@ public class Game {
     }
 
     public void roll(int pinsKnocked) {
-        if (isNumberOfPinsKnockedOutOfBound(pinsKnocked)) {
-            throw new IllegalArgumentException();
-        }
-        if (isNumberOfPinsKnockedExceedingMaxForFrame(pinsKnocked)) {
-            throw new IllegalArgumentException();
-        }
+        validateNumberOfPinsWithinRollBounds(pinsKnocked);
+        validateNumberOfPinsWithinFrameBounds(pinsKnocked);
         gameFrameCounter[currentFrame][currentThrowInFrame] = pinsKnocked;
         gameScore = gameScore + pinsKnocked;
         prepareForNextRoll();
     }
 
+    private void validateNumberOfPinsWithinFrameBounds(int pinsKnocked) {
+        if (isNumberOfPinsKnockedExceedingMaxForFrame(pinsKnocked)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private static void validateNumberOfPinsWithinRollBounds(int pinsKnocked) {
+        if (isNumberOfPinsKnockedOutOfBound(pinsKnocked)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
     private void prepareForNextRoll() {
-        if (currentThrowInFrame == 1) {
+        if (currentFrame == 9 && currentThrowInFrame == 1) {
+            currentThrowInFrame++;
+        }
+        else if (currentThrowInFrame == 1) {
             currentThrowInFrame = 0;
-            currentFrame ++;
-        } else {
+            currentFrame++;
+        }
+        else {
             currentThrowInFrame ++;
         }
     }
+
+
 
     private static boolean isNumberOfPinsKnockedOutOfBound(int pinsKnocked) {
         return pinsKnocked > 10 || pinsKnocked < 0;
